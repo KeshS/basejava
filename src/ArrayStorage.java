@@ -1,4 +1,4 @@
-
+import java.lang.reflect.Array;
 
 /**
  * Array based storage for Resumes
@@ -37,12 +37,11 @@ public class ArrayStorage {
     void delete(String uuid) {
         for(int i=0; i<storage.length;i++){
             if(storage[i]==null)
-                break;
-            else if(storage[i].uuid.equals(uuid)){
+                continue;
+            if(storage[i].uuid.equals(uuid)){
                 storage[i] = null;
                 break;
             }
-
         }
     }
 
@@ -50,19 +49,17 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        int resumeNum=0;
+        Integer[] numbList = new Integer[10000];
+        int numberLength = 0;
         for(int i=0; i<storage.length;i++){
-            if(storage[i] ==null){
-                resumeNum=i;
-                break;
+            if(storage[i] != null){
+                numbList[numberLength]=i;
+                numberLength++;
             }
         }
-        Resume[] newStorage = new Resume[resumeNum];
-        for(int j=0; j<storage.length;j++){
-            if(storage[j] ==null){
-                break;
-            }
-            newStorage[j] = storage[j];
+        Resume[] newStorage = new Resume[numberLength];
+        for(int k=0; k<newStorage.length;k++){
+            newStorage[k] = storage[numbList[k]];
         }
         return newStorage;
     }
