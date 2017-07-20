@@ -35,11 +35,25 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        for(int i=0; i<storage.length;i++){
+        int i = 0;
+        for(; i<storage.length;i++){
             if(storage[i]==null)
-                continue;
+                break;
             if(storage[i].uuid.equals(uuid)){
                 storage[i] = null;
+                int deletedVar = i;
+                for(;i<storage.length;i++){
+                    if(storage[i]==null){
+                        try {
+                            storage[deletedVar] = storage[i - 1];
+                        }catch (ArrayIndexOutOfBoundsException e){
+                            break;
+                        }
+                        storage[i-1]=null;
+                        break;
+                    }else
+                        continue;
+                }
                 break;
             }
         }
