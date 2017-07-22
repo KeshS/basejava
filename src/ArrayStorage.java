@@ -14,21 +14,14 @@ public class ArrayStorage {
     }
 
     void save(Resume r) {
-        for(int i=0; i<storage.length;i++){
-            if(storage[i]==null){
-                storage[i]=r;
-                size = i+1;
-                break;
-            }
-        }
+        storage[size] = r;
+        size++;
     }
 
     Resume get(String uuid) {
         Resume value = null;
-        for(int i=0; i<storage.length;i++){
-            if(storage[i]==null)
-                continue;
-            else if(storage[i].uuid.equals(uuid)){
+        for(int i=0; i<size;i++){
+            if(storage[i].uuid.equals(uuid)){
                 value = storage[i];
                 break;
             }
@@ -37,26 +30,11 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        int i = 0;
-        for(; i<storage.length;i++){
-            if(storage[i]==null)
-                break;
+        for(int i=0; i<size;i++){
             if(storage[i].uuid.equals(uuid)){
-                storage[i] = null;
-                int deletedVar = i;
-                for(;i<storage.length;i++){
-                    if(storage[i]==null){
-                        try {
-                            storage[deletedVar] = storage[i - 1];
-                        }catch (ArrayIndexOutOfBoundsException e){
-                            break;
-                        }
-                        storage[i-1]=null;
-                        break;
-                    }else
-                        continue;
-                }
-                size = i;
+                storage[i] = storage[size-1];
+                storage[size-1] = null;
+                size--;
                 break;
             }
         }
@@ -66,17 +44,9 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        Integer[] numbList = new Integer[10000];
-        int numberLength = 0;
-        for(int i=0; i<storage.length;i++){
-            if(storage[i] != null){
-                numbList[numberLength]=i;
-                numberLength++;
-            }
-        }
-        Resume[] newStorage = new Resume[numberLength];
-        for(int k=0; k<newStorage.length;k++){
-            newStorage[k] = storage[numbList[k]];
+        Resume[] newStorage = new Resume[size];
+        for(int i=0; i<size;i++){
+            newStorage[i] = storage[i];
         }
         return newStorage;
     }
