@@ -5,6 +5,7 @@ import java.lang.reflect.Array;
  */
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
+    private int size = 0;
 
     void clear() {
         for(int i=0; i<storage.length;i++){
@@ -16,6 +17,7 @@ public class ArrayStorage {
         for(int i=0; i<storage.length;i++){
             if(storage[i]==null){
                 storage[i]=r;
+                size = i+1;
                 break;
             }
         }
@@ -54,6 +56,7 @@ public class ArrayStorage {
                     }else
                         continue;
                 }
+                size = i;
                 break;
             }
         }
@@ -79,13 +82,6 @@ public class ArrayStorage {
     }
 
     int size() {
-        int countSize = 0;
-        for(int i=0; i<storage.length;i++) {
-            if (storage[i] != null)
-                countSize++;
-            else
-                break;
-        }
-        return countSize;
+        return size;
     }
 }
